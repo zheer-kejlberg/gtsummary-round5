@@ -5,10 +5,8 @@ date: "2023-11-04"
 output: github_document
 ---
 
-## Definition of the function and use example
+### Definition of the function and use example
 
-<br>
-  
 <br>
   
 #### 1) Load dependencies
@@ -17,7 +15,11 @@ output: github_document
 library(gtsummary) # For creating a baseline characteristics table
 library(tidyverse) # For data wrangling and misc.
 ```
-
+  
+<br>
+  
+<br>
+  
 #### 2) Define the function
 
 ```{r}
@@ -55,7 +57,11 @@ round_5_gtsummary <- function(table) {
   return(table)
 }
 ```
+  
+<br>
 
+<br>
+  
 #### 3) Run it on a tbl_summary (unweighted) or tbl_svysummary (weighted) table
 
 
@@ -66,7 +72,9 @@ trial %>%
   tbl_summary(by = grade, include = c(trt, age, stage))
 
 ```
-
+  
+<br>
+  
 Now, the same table but with all counts rounded to nearest 5 (and all proportions adjusted accordingly)
 ```{r}
 
@@ -75,7 +83,9 @@ trial %>%
   round_5_gtsummary()
 
 ```
-
+  
+<br>
+  
 Finally, the function can also be applied to weighted data (here shown with and without rounding)
 ```{r, error=FALSE, warning=FALSE, message=FALSE}
 

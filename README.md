@@ -3,9 +3,7 @@ A function to round counts to nearest 5 in gtsummary baseline tables
 Zheer Kejlberg Al-Mashhadi
 2023-11-04
 
-## Definition of the function and use example
-
-<br>
+### Definition of the function and use example
 
 <br>
 
@@ -15,6 +13,10 @@ Zheer Kejlberg Al-Mashhadi
 library(gtsummary) # For creating a baseline characteristics table
 library(tidyverse) # For data wrangling and misc.
 ```
+
+<br>
+
+<br>
 
 #### 2) Define the function
 
@@ -53,6 +55,10 @@ round_5_gtsummary <- function(table) {
 }
 ```
 
+<br>
+
+<br>
+
 #### 3) Run it on a tbl_summary (unweighted) or tbl_svysummary (weighted) table
 
 For comparison, here’s a table without rounding
@@ -62,7 +68,7 @@ trial %>%
   tbl_summary(by = grade, include = c(trt, age, stage))
 ```
 
-<div id="sgkudtnkpi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="uvalwdxizo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
@@ -123,6 +129,8 @@ trial %>%
 </table>
 </div>
 
+<br>
+
 Now, the same table but with all counts rounded to nearest 5 (and all
 proportions adjusted accordingly)
 
@@ -132,7 +140,7 @@ trial %>%
   round_5_gtsummary()
 ```
 
-<div id="rwvkoxkrka" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="gcznmpuxqz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
@@ -193,6 +201,8 @@ trial %>%
 </table>
 </div>
 
+<br>
+
 Finally, the function can also be applied to weighted data (here shown
 with and without rounding)
 
@@ -206,7 +216,7 @@ weighted_trial %>%
   tbl_svysummary(by = grade, include = c(trt, age, stage))
 ```
 
-<div id="grwjdtxbfk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="xkqwoifstw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
@@ -273,7 +283,7 @@ weighted_trial %>%
   round_5_gtsummary()
 ```
 
-<div id="dkdjucyknx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="gteelurcwc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
