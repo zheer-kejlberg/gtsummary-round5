@@ -1,0 +1,94 @@
+---
+title: "A function to round counts to nearest 5 in gtsummary baseline tables"
+author: "Zheer Kejlberg Al-Mashhadi"
+date: "2023-11-04"
+output: github_document
+---
+
+## Definition of the function and use example
+
+<br>
+  
+<br>
+  
+#### 1) Load dependencies
+
+```{r, results='hide', error=FALSE, warning=FALSE, message=FALSE}
+library(gtsummary) # For creating a baseline characteristics table
+library(tidyverse) # For data wrangling and misc.
+```
+
+#### 2) Define the function
+
+```{r}
+
+round_5_gtsummary <- function(table) {
+  
+  round_5 <- function(x) { round(x/5)*5 }
+  
+  round_5_get_summary <- function(x, N, decimals = 1) {
+    x <- str_remove(x, " \\([<]*[0-9]*[,]*[0-9]*[.]*[0-9]*%\\)$")
+    x <- as.numeric(str_remove(x, ","))
+    
+    if (x > N-5) {
+      N <- round_5(N)
+      return(paste0(">", N-5, "(>", round((N-5)/N*100, decimals), "%)"))
+    } else if (x >= 5) {
+      return(paste0(round_5(x), " (", round(round_5(x)/round_5(N)*100,decimals),"%)"))
+    } else {
+      return(paste0("<", 5," (<", round(5/round_5(N)*100,decimals),"%)"))
+    }
+  }
+  
+  body <- table$table_body
+  stats_column_indices <- which(grepl("^stat_", colnames(body)))
+  
+  Ns <- table$table_styling$header$modify_stat_n[c(stats_column_indices)]
+  table$table_styling$header$label[c(stats_column_indices)] <- paste0("**", table$table_styling$header$modify_stat_level[c(stats_column_indices)], "**", ", N = ", round_5(Ns))
+  
+  for (column_no in stats_column_indices) {
+    column <- pull(body, column_no)
+    cat_indices <- (body$var_type == "categorical" | body$var_type == "dichotomous" | body$label == "Unknown") & !is.na(body$stat_1)
+    column[cat_indices] <- sapply(column[cat_indices], round_5_get_summary, N = Ns[column_no-5])
+    table$table_body[column_no] <- column
+  }
+  return(table)
+}
+```
+
+#### 3) Run it on a tbl_summary (unweighted) or tbl_svysummary (weighted) table
+
+
+For comparison, here's a table without rounding
+```{r}
+
+trial %>% 
+  tbl_summary(by = grade, include = c(trt, age, stage))
+
+```
+
+Now, the same table but with all counts rounded to nearest 5 (and all proportions adjusted accordingly)
+```{r}
+
+trial %>% 
+  tbl_summary(by = grade, include = c(trt, age, stage)) %>%
+  round_5_gtsummary()
+
+```
+
+Finally, the function can also be applied to weighted data (here shown with and without rounding)
+```{r, error=FALSE, warning=FALSE, message=FALSE}
+
+library(WeightIt) # for calculating weights
+weighted_trial <- trial %>% 
+  mutate(w = weightit(grade ~ trt + age + stage, estimand = "ATT", focal = "I")$weights) %>%
+  survey::svydesign(~1, data = ., weights = ~w)
+
+weighted_trial %>%
+  tbl_svysummary(by = grade, include = c(trt, age, stage))
+
+weighted_trial %>%
+  tbl_svysummary(by = grade, include = c(trt, age, stage)) %>% 
+  round_5_gtsummary()
+
+```
