@@ -48,7 +48,8 @@ round_5_gtsummary <- function(table) {
   for (column_no in stats_column_indices) {
     column <- pull(body, column_no)
     cat_indices <- (body$var_type == "categorical" | body$var_type == "dichotomous" | body$label == "Unknown") & !is.na(body$stat_1)
-    column[cat_indices] <- sapply(column[cat_indices], round_5_get_summary, N = Ns[column_no-5])
+    N <- table$table_styling$header$modify_stat_n[column_no]
+    column[cat_indices] <- sapply(column[cat_indices], round_5_get_summary, N = N)
     table$table_body[column_no] <- column
   }
   return(table)
@@ -68,7 +69,7 @@ trial %>%
   tbl_summary(by = grade, include = c(trt, age, stage))
 ```
 
-<div id="uvalwdxizo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ynbjzyqskc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
@@ -140,7 +141,7 @@ trial %>%
   round_5_gtsummary()
 ```
 
-<div id="gcznmpuxqz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="hriiifqiba" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
@@ -216,7 +217,7 @@ weighted_trial %>%
   tbl_svysummary(by = grade, include = c(trt, age, stage))
 ```
 
-<div id="xkqwoifstw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="pdrfignjfo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
@@ -283,7 +284,7 @@ weighted_trial %>%
   round_5_gtsummary()
 ```
 
-<div id="gteelurcwc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="seoblzxpfn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
